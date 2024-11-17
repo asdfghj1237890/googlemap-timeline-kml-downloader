@@ -69,10 +69,10 @@ download_kml_files() {
       rm -f "$kmlfile"
     fi
 
-    # 更大範圍的隨機延遲 (2-5分鐘)
+    # Larger random delay range (2-5 minutes)
     random_delay=$(awk -v min=$base_delay -v max=300 'BEGIN{srand(); printf "%.2f", min + rand() * (max - min)}')
     
-    # 33%機率增加額外的隨機延遲
+    # 33% chance to add extra random delay
     if [ $((RANDOM % 3)) -eq 0 ]; then
       random_delay=$(echo "$random_delay * 2.0" | bc)
       debug "Adding extra delay..."
@@ -103,7 +103,7 @@ download_kml() {
     debug "Using User-Agent: $random_agent"
     debug "Starting request at $(date '+%Y-%m-%d %H:%M:%S')"
     
-    # 使用臨時文件存儲響應頭
+    # Use temporary file to store response headers
     local headers_file=$(mktemp)
     
     response=$(curl -Ls -D "$headers_file" -w "%{http_code}|%{url_effective}" -o temp_response_body -b "$cookies" \
@@ -136,14 +136,14 @@ download_kml() {
       -H "priority: u=0, i" \
       "$url" --retry 2 --retry-delay 5 --compressed)
 
-    # 解析 response 中的 HTTP 狀態碼和最終 URL
+    # Parse HTTP status code and final URL from response
     http_code=$(echo "$response" | cut -d'|' -f1)
     final_url=$(echo "$response" | cut -d'|' -f2)
     
     debug "Initial URL: $url"
     debug "Final URL: $final_url"
     
-    # 檢查各種登入相關的重定向
+    # Check various login-related redirects
     if echo "$final_url" | grep -qE "accounts.google.com/(ServiceLogin|InteractiveLogin)"; then
         debug "Cookie has expired or is invalid (redirected to login page)"
         debug "Please export a new cookies.txt file from your browser"
@@ -152,7 +152,7 @@ download_kml() {
     fi
     
     if [ "$http_code" -eq 200 ]; then
-        # 檢查回應內容是否為 HTML（而不是預期的 KML）
+        # Check if response content is HTML (instead of expected KML)
         if grep -q "<!doctype html>" temp_response_body; then
             debug "Received HTML instead of KML - likely a login page"
             debug "Please check your cookies.txt file"
@@ -160,16 +160,16 @@ download_kml() {
             return 1
         fi
         
-        # 檢查檔案是否為空
+        # Check if file is empty
         if [ ! -s temp_response_body ]; then
           debug "Empty response body received"
           rm -f "$headers_file"
           return 1
         fi
         
-        # 檢查是否包含必要的 KML 內容
+        # Check if response contains required KML content
         if grep -q "<?xml" temp_response_body && grep -q "<kml" temp_response_body; then
-          # 確保檔案大小超過最小閾值（例如 100 bytes）
+          # Ensure file size is above minimum threshold (e.g., 100 bytes)
           if [ $(wc -c < temp_response_body) -gt 100 ]; then
             debug "Valid KML content received"
             cat temp_response_body
