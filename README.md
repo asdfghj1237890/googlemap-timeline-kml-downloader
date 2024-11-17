@@ -37,17 +37,18 @@ chmod +x google-timeline-download.sh
 
 ### Output
 
-- The script creates individual KML files for each day, named in the format `YYYY-MM-DD.kml`
-- Files are saved in the current directory
+- The script creates KML files organized in year-based directories (e.g., `kml/2024/2024-01-01.kml`)
 - Each file contains your location history for that specific day
+- Empty or invalid KML files are automatically removed
 
 ## Troubleshooting
 
 - If you get permission errors, ensure the script is executable: `chmod +x google-timeline-download.sh`
 - If downloads fail, verify that:
-  - Your cookies file is valid and recent
+  - Your cookies file is valid and recent (you may need to re-export if redirected to login)
   - You have Location History enabled in your Google Account
   - You have a stable internet connection
+  - You haven't exceeded Google's rate limits (script will automatically pause if needed)
 
 ## Note
 
@@ -55,7 +56,11 @@ chmod +x google-timeline-download.sh
   - Google Earth
   - Google My Maps
   - Other GIS applications
-- The script includes rate limiting protection to avoid Google's API restrictions
+- The script includes advanced rate limiting protection:
+  - Random delays between requests (2-5 minutes)
+  - Additional random delays (33% chance)
+  - Batch processing (pauses after every 8 requests)
+  - Automatic retry with exponential backoff for rate-limited requests
 - Cookie file must follow the Netscape HTTP Cookie File format
 
 
@@ -98,17 +103,18 @@ chmod +x google-timeline-download.sh
 
 ### 輸出結果
 
-- 腳本會為每一天建立個別的 KML 檔案，檔名格式為 `YYYY-MM-DD.kml`
-- 檔案會儲存在目前的目錄中
+- 腳本會依年份建立目錄結構（例如：`kml/2024/2024-01-01.kml`）
 - 每個檔案包含該特定日期的位置記錄
+- 空白或無效的 KML 檔案會自動移除
 
 ## 疑難排解
 
 - 如果遇到權限錯誤，請確保腳本具有執行權限：`chmod +x google-timeline-download.sh`
 - 如果下載失敗，請確認：
-  - 您的 cookies 檔案有效且為最新
+  - 您的 cookies 檔案有效且為最新（如果被重新導向到登入頁面，可能需要重新匯出）
   - 您的 Google 帳戶已啟用位置記錄
   - 您有穩定的網路連線
+  - 未超過 Google 的速率限制（腳本會自動暫停如有需要）
 
 ## 注意事項
 
@@ -116,5 +122,9 @@ chmod +x google-timeline-download.sh
   - Google Earth
   - Google My Maps
   - 其他 GIS 應用程式
-- 腳本包含速率限制保護，以避免觸發 Google API 的限制
+- 腳本包含進階速率限制保護：
+  - 請求之間的隨機延遲（2-5分鐘）
+  - 額外的隨機延遲（33%機率）
+  - 批次處理（每8個請求後暫停）
+  - 遇到速率限制時自動重試並指數退避
 - Cookie 檔案必須遵循 Netscape HTTP Cookie File 格式
