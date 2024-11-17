@@ -28,10 +28,10 @@ date_range() {
 
 download_kml_files() {
   local cookies=$1 from=$2 to=$3
-  local base_delay=5
+  local base_delay=2
   local random_delay
   local count=0
-  local batch_size=20
+  local batch_size=300
   local batch_pause=2000
 
   # Create base kml directory if it doesn't exist
@@ -63,18 +63,20 @@ download_kml_files() {
     debug "GET $url -> $kmlfile"
     if download_kml "$cookies" "$url" >"$kmlfile"; then
       echo "$kmlfile downloaded successfully."
+      echo ""
     else
       debug "Failed to download $kmlfile."
+      echo ""
       # Remove empty or invalid KML file
       rm -f "$kmlfile"
     fi
 
     # Larger random delay range (2-5 minutes)
-    random_delay=$(awk -v min=$base_delay -v max=30 'BEGIN{srand(); printf "%.2f", min + rand() * (max - min)}')
+    random_delay=$(awk -v min=$base_delay -v max=7 'BEGIN{srand(); printf "%.2f", min + rand() * (max - min)}')
     
     # 33% chance to add extra random delay
     if [ $((RANDOM % 3)) -eq 0 ]; then
-      random_delay=$(echo "$random_delay * 2.0" | bc)
+      random_delay=$(echo "$random_delay * 1.5" | bc)
       debug "Adding extra delay..."
     fi
     
