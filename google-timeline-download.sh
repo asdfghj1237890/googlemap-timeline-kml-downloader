@@ -31,8 +31,8 @@ download_kml_files() {
   local base_delay=5
   local random_delay
   local count=0
-  local batch_size=8
-  local batch_pause=3600
+  local batch_size=20
+  local batch_pause=2000
 
   # Create base kml directory if it doesn't exist
   mkdir -p kml
@@ -70,7 +70,7 @@ download_kml_files() {
     fi
 
     # Larger random delay range (2-5 minutes)
-    random_delay=$(awk -v min=$base_delay -v max=300 'BEGIN{srand(); printf "%.2f", min + rand() * (max - min)}')
+    random_delay=$(awk -v min=$base_delay -v max=30 'BEGIN{srand(); printf "%.2f", min + rand() * (max - min)}')
     
     # 33% chance to add extra random delay
     if [ $((RANDOM % 3)) -eq 0 ]; then
