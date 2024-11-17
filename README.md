@@ -58,6 +58,9 @@ chmod +x google-timeline-download.sh
 - The script includes rate limiting protection to avoid Google's API restrictions
 - Cookie file must follow the Netscape HTTP Cookie File format
 
+
+# googlemap-timeline-kml-downloader
+
 一個用於下載 Google Maps 時間軸資料為 KML 格式的工具。
 基於 https://gist.github.com/tokland/1bfbbdf495576cf6253d8153d7168de4
 
