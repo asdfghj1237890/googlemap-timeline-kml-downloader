@@ -7,7 +7,7 @@ Based on https://gist.github.com/tokland/1bfbbdf495576cf6253d8153d7168de4
 
 - Google account with Location History enabled
 - Browser cookies from timeline.google.com (saved as `timeline.google.com_cookies.txt`)
-- curl installed on your system
+- curl and bc installed on your system
 
 ## Installation
 
@@ -41,6 +41,20 @@ chmod +x google-timeline-download.sh
 - Each file contains your location history for that specific day
 - Empty or invalid KML files are automatically removed
 
+## Advanced Features
+
+- Sophisticated rate limiting protection:
+  - Base delay of 2-7 minutes between requests
+  - 33% chance of additional 50% delay
+  - Batch processing (pauses for 33-63 minutes after every 300 requests)
+  - Automatic retry with exponential backoff for rate-limited requests
+- Robust error handling:
+  - Validates KML content before saving
+  - Detects and handles expired cookies
+  - Removes invalid or empty KML files
+  - Retries on rate limits with exponential backoff
+- Modern browser emulation with complete headers
+
 ## Troubleshooting
 
 - If you get permission errors, ensure the script is executable: `chmod +x google-timeline-download.sh`
@@ -56,11 +70,6 @@ chmod +x google-timeline-download.sh
   - Google Earth
   - Google My Maps
   - Other GIS applications
-- The script includes advanced rate limiting protection:
-  - Random delays between requests (2-5 minutes)
-  - Additional random delays (33% chance)
-  - Batch processing (pauses after every 8 requests)
-  - Automatic retry with exponential backoff for rate-limited requests
 - Cookie file must follow the Netscape HTTP Cookie File format
 
 
@@ -73,7 +82,7 @@ chmod +x google-timeline-download.sh
 
 - 已啟用位置記錄的 Google 帳戶
 - 來自 timeline.google.com 的瀏覽器 cookies（儲存為 `timeline.google.com_cookies.txt`）
-- 系統已安裝 curl
+- 系統已安裝 curl 和 bc
 
 ## 安裝
 
@@ -107,6 +116,20 @@ chmod +x google-timeline-download.sh
 - 每個檔案包含該特定日期的位置記錄
 - 空白或無效的 KML 檔案會自動移除
 
+## 進階功能
+
+- 複雜的速率限制保護：
+  - 請求之間的基本延遲為2-7分鐘
+  - 33%機率增加50%額外延遲
+  - 批次處理（每300個請求後暫停33-63分鐘）
+  - 遇到速率限制時自動重試並指數退避
+- 強大的錯誤處理：
+  - 儲存前驗證KML內容
+  - 檢測並處理過期的cookies
+  - 移除無效或空白的KML檔案
+  - 遇到速率限制時以指數退避方式重試
+- 模擬現代瀏覽器的完整標頭
+
 ## 疑難排解
 
 - 如果遇到權限錯誤，請確保腳本具有執行權限：`chmod +x google-timeline-download.sh`
@@ -122,9 +145,4 @@ chmod +x google-timeline-download.sh
   - Google Earth
   - Google My Maps
   - 其他 GIS 應用程式
-- 腳本包含進階速率限制保護：
-  - 請求之間的隨機延遲（2-5分鐘）
-  - 額外的隨機延遲（33%機率）
-  - 批次處理（每8個請求後暫停）
-  - 遇到速率限制時自動重試並指數退避
 - Cookie 檔案必須遵循 Netscape HTTP Cookie File 格式
