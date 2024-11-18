@@ -134,7 +134,6 @@ download_kml() {
       -H "x-browser-copyright: Copyright 2024 Google LLC. All rights reserved." \
       -H "x-browser-validation: QFEz3B6Z4AT6PlLzuts1mBxQGCM=" \
       -H "x-browser-year: 2024" \
-      -H "x-client-data: CIm2yQEIprbJAQiKksoBCKmdygEI4InLAQiWocsBCIWgzQEIsZ7OAQj9pc4BCKrJzgEI+8nOAQiRys4BCIHMzgEIw8zOAQjFzM4BCMfPzgEI9M/OAQiu0M4BCOHQzgEYj87NARibsc4BGIDKzgEYk9DOARjr0M4B" \
       -H "priority: u=0, i" \
       "$url" --retry 2 --retry-delay 5 --compressed)
 
@@ -149,8 +148,9 @@ download_kml() {
     if echo "$final_url" | grep -qE "accounts.google.com/(ServiceLogin|InteractiveLogin)"; then
         debug "Cookie has expired or is invalid (redirected to login page)"
         debug "Please export a new cookies.txt file from your browser"
+        debug "FAIL !!!!!"
         rm -f "$headers_file" temp_response_body
-        return 1
+        exit 1
     fi
     
     if [ "$http_code" -eq 200 ]; then
