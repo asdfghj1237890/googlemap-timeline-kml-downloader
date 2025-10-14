@@ -26,7 +26,7 @@ chmod +x google-timeline-download.sh
 
 2. Run the script:
 ```bash
-./google-timeline-download.sh timeline.google.com_cookies.txt 2024-01-01 2024-01-31
+./google-timeline-download.sh timeline.google.com_cookies.txt 2024-01-01 2025-01-31
 ```
 
 ### Parameters
@@ -101,7 +101,7 @@ chmod +x google-timeline-download.sh
 
 2. 執行腳本：
 ```bash
-./google-timeline-download.sh timeline.google.com_cookies.txt 2024-01-01 2024-01-31
+./google-timeline-download.sh timeline.google.com_cookies.txt 2024-01-01 2025-01-31
 ```
 
 ### 參數說明
