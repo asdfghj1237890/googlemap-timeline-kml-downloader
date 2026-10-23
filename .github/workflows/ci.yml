@@ -1,0 +1,22 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bash syntax
+        run: bash -n google-timeline-download.sh tests/offline.sh
+      - name: Offline fixtures
+        run: bash tests/offline.sh
+      - name: Ensure private exports are excluded
+        run: |
+          test -z "$(git ls-files -- '*cookies*.txt' '*.kml' 'kml/**' 'temp_response_body')"
+          git check-ignore timeline.google.com_cookies.txt kml/2026/fixture.kml temp_response_body

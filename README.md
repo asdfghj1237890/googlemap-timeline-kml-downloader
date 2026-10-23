@@ -146,3 +146,15 @@ chmod +x google-timeline-download.sh
   - Google My Maps
   - 其他 GIS 應用程式
 - Cookie 檔案必須遵循 Netscape HTTP Cookie File 格式
+
+## Local credentials and exports / 本機憑證與匯出資料
+
+Browser cookies grant access to your Google account. Keep the exported cookie
+file and KML location history local; `.gitignore` excludes them. The repository
+no longer distributes a cookie file. Export your own file before using the tool.
+Cookies committed in older repository history must be treated as exposed;
+revoke the affected Google sessions before exporting fresh credentials.
+
+瀏覽器 cookies 可存取 Google 帳戶。Cookie 與 KML 位置記錄僅存本機，
+已由 `.gitignore` 排除；使用前請自行匯出。歷史提交中的 cookies 應視為已外洩，
+請先撤銷受影響的 Google 登入工作階段，再匯出新的憑證。

@@ -1,0 +1,7 @@
+# Browser credentials and personal location exports stay on this machine.
+*cookies*.txt
+/kml
+*.kml
+/temp_response_body
+.env
+.env.*
