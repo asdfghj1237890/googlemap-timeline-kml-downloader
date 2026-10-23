@@ -7,7 +7,7 @@ Based on https://gist.github.com/tokland/1bfbbdf495576cf6253d8153d7168de4
 
 - Google account with Location History enabled
 - Browser cookies from timeline.google.com (saved as `timeline.google.com_cookies.txt`)
-- curl and bc installed on your system
+- Bash, curl, awk, and GNU coreutils (provided by Git Bash on Windows)
 
 ## Installation
 
@@ -44,7 +44,7 @@ chmod +x google-timeline-download.sh
 ## Advanced Features
 
 - Sophisticated rate limiting protection:
-  - Base delay of 2-7 minutes between requests
+  - Base delay of 2-7 seconds between requests
   - 33% chance of additional 50% delay
   - Batch processing (pauses for 33-63 minutes after every 300 requests)
   - Automatic retry with exponential backoff for rate-limited requests
@@ -82,7 +82,7 @@ chmod +x google-timeline-download.sh
 
 - 已啟用位置記錄的 Google 帳戶
 - 來自 timeline.google.com 的瀏覽器 cookies（儲存為 `timeline.google.com_cookies.txt`）
-- 系統已安裝 curl 和 bc
+- Bash、curl、awk 與 GNU coreutils（Windows 的 Git Bash 已提供）
 
 ## 安裝
 
@@ -119,7 +119,7 @@ chmod +x google-timeline-download.sh
 ## 進階功能
 
 - 複雜的速率限制保護：
-  - 請求之間的基本延遲為2-7分鐘
+  - 請求之間的基本延遲為2-7秒
   - 33%機率增加50%額外延遲
   - 批次處理（每300個請求後暫停33-63分鐘）
   - 遇到速率限制時自動重試並指數退避

@@ -76,7 +76,7 @@ download_kml_files() {
     
     # 33% chance to add extra random delay
     if [ $((RANDOM % 3)) -eq 0 ]; then
-      random_delay=$(echo "$random_delay * 1.5" | bc)
+      random_delay=$(awk -v delay="$random_delay" 'BEGIN { printf "%.2f", delay * 1.5 }')
       debug "Adding extra delay..."
     fi
     

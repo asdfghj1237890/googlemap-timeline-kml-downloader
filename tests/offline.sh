@@ -53,4 +53,11 @@ rc=0
 bash "$repo/google-timeline-download.sh" > usage.log 2>&1 || rc=$?
 test "$rc" -eq 2
 grep -q 'Usage:' usage.log
-printf 'PASS: 11 offline download/date/usage checks (no network or real credentials)\n'
+fixture=valid
+download_kml_files fixture-cookies.txt 2024-12-31 2025-01-01 > download.log 2>&1
+test -s kml/2024/2024-12-31.kml
+test -s kml/2025/2025-01-01.kml
+fixture=html
+download_kml_files fixture-cookies.txt 2025-01-02 2025-01-02 > rejected.log 2>&1
+test ! -e kml/2025/2025-01-02.kml
+printf 'PASS: 13 offline download/date/usage checks (no network or real credentials)\n'
